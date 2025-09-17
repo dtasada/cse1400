@@ -23,11 +23,11 @@ main:
 	mov $base, %rsi
 	call scanf
 
-	leaq base(%rip), %rdi 
+	mov base(%rip), %rdi 
 	call factorial
 
 	mov $result, %rdi
-	leaq base(%rip), %rsi
+	mov base(%rip), %rsi
 	mov %rax, %rdx
 	call printf
 
@@ -47,8 +47,8 @@ factorial:
 	
 	call factorial
 
-	pop %rsi
-	mul %rsi
+	pop %rdi
+	mul %rdi
 	
 	leave
 
