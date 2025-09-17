@@ -49,6 +49,7 @@ main:
 	call exit
 
 factorial:
+	enter $0, $0
 	# if base < 2, break
 	cmpq $2, %rdi
 	jl factorial_ret_1
@@ -64,9 +65,11 @@ factorial:
 
 	pop %rsi # restore base into rsi
 	mul %rsi # put (base * factorial(base - 1) in rax
+	leave
 	ret
 
 	# mov %rsp, %rbp # prologue
 factorial_ret_1:
 	mov $1, %rax
+	leave
 	ret
