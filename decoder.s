@@ -1,5 +1,7 @@
 .text
 
+num_fmt: .asciz "char: %c\n"
+
 .include "helloWorld.s"
 
 .global main
@@ -20,8 +22,22 @@ decode:
 	pushq	%rbp 			# push the base pointer (and align the stack)
 	movq	%rsp, %rbp		# copy stack pointer value to base pointer
 
-	# your code goes here
+	push MESSAGE(%rip) # push address of message into stack
+	mov $0, %rcx
 
+loop_start:
+	cmp $13, %rcx
+	jl loop_end
+
+	mov $num_fmt, %rdi
+	mov MESSAGE(%rcx), %rsi # copy address of mesasge into rsi
+	call printf
+
+	inc %rcx
+	# pushq MESSAGE(%rcx)
+	jmp loop_start
+
+loop_end:
 	# epilogue
 	movq	%rbp, %rsp		# clear local variables from stack
 	popq	%rbp			# restore base pointer location 
